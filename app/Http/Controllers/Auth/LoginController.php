@@ -9,17 +9,20 @@ class LoginController extends Controller
 {
     public function index()
     {
-        $this->validate($request, [
-            'name' =>'required|max:225',
-            'username' =>'required|max:225',
-            'email' =>'required|email|max:225',
-            'password' =>'required|confirmed',
-       ]);
+
         return view('auth.login');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        dd('ok');
+        $this->validate($request, [
+            'email' =>'required|email',
+            'password' =>'required',
+       ]);
+
+       if (!auth()->attempt($request->only('email', 'password'))) {
+            return back()->with('status', 'invalid login details');
+       }
+       return redirect()->route('dashboard');
     }
 }
