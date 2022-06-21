@@ -22,6 +22,7 @@
                
                 <li>
                     <form action="{{route('logout')}}" method="post" class="p-3 inline">
+                        @csrf
                         <button type="submit" class="">Logout</button>    
                     </form>
                 </li>
